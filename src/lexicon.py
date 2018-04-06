@@ -3,9 +3,23 @@ Created on Apr 6, 2018
 '''
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
-from nltk.ccg import lexicon
 
-text = """\
+'''
+- NOUN = nouns 
+- VERB = verbs 
+- ADJ = adjectives 
+- ADV = adverbs 
+- PRON = pronouns 
+- DET = determiners and articles 
+- ADP = prepositions and postpositions 
+- NUM = numerals 
+- CONJ = conjunctions 
+- PRT = particles 
+- . = punctuation marks 
+- X = a catch-all for other categories such as abbreviations or foreign words 
+'''
+
+text = '''\
 Bart laughs
 Homer laughed
 Bart and Lisa drink milk
@@ -18,7 +32,7 @@ Homer never drinks milk in the kitchen before midnight
 when Homer drinks milk Bart laughs
 when does Lisa drink the milk on the table
 when do Lisa and Bart wear shoes
-"""
+'''
 sents = text.splitlines()
 tagger_lexicon = {}
 for sent in sents:
@@ -41,3 +55,4 @@ lexicon_dict = {'NOUN': ['Bart', 'Homer', 'Lisa', 'milk', 'shoes', 'salad', 'thi
                 'ADV': ['always', 'never', 'when'], 
                 'ADP': ['in', 'before', 'on']
                 }
+print(lexicon_dict)
