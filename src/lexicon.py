@@ -3,6 +3,7 @@ Created on Apr 6, 2018
 '''
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
+import nltk
 
 '''
 - NOUN = nouns 
@@ -37,7 +38,7 @@ sents = text.splitlines()
 tagger_lexicon = {}
 for sent in sents:
     words = word_tokenize(sent)
-    tagged_sent = pos_tag(words, tagset='universal')
+    tagged_sent = pos_tag(words)
     for tagged_word in tagged_sent:
         word = tagged_word[0]
         tag =  tagged_word[1]
@@ -47,12 +48,13 @@ for sent in sents:
             tagger_lexicon[tag].append(word)
         else:
             pass
-lexicon_dict = {'NOUN': ['Bart', 'Homer', 'Lisa', 'milk', 'shoes', 'salad', 'thinks', 'kitchen', 'midnight', 'table'],
-                'VERB': ['laughs', 'laughed', 'drink', 'wears', 'serves', 'drinks', 'thinks', 'does', 'do', 'wear'],
-                'CONJ': ['and'],
-                'ADJ': ['blue', 'healthy', 'green'], 
+lexicon_dict = {'N': ['milk', 'shoes', 'salad', 'thinks', 'kitchen', 'midnight', 'table'],
+                'V': ['laughs', 'laughed', 'drink', 'wears', 'serves', 'drinks', 'thinks', 'does', 'do', 'wear'],
+                'ProperNoun': ['Bart', 'Homer', 'Lisa'],
+                'CC': ['and'],
+                'Adj': ['blue', 'healthy', 'green'], 
                 'DET': ['a', 'the'], 
-                'ADV': ['always', 'never', 'when'], 
-                'ADP': ['in', 'before', 'on']
+                'Adv': ['always', 'never', 'when'], 
+                'P': ['in', 'before', 'on']
                 }
-print(lexicon_dict)
+print(tagger_lexicon)
