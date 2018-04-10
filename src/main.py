@@ -6,9 +6,11 @@ from nltk import CFG, ChartParser
 def context_free_grammar():
     cfg = CFG.fromstring("""\
     S -> NP VP
-    NP -> ProperNoun | NP CC NP | N | ProperNoun NP | AP N | DET NP    
+    S -> PP NP VP 
+    NP -> ProperNoun | CC ProperNoun | N | ProperNoun NP | AP N | DET NP | N PP    
     VP -> V | V NP | Adv VP | V NP VP
-    AP -> Adj | Adj AP 
+    AP -> Adj | Adj AP
+    PP -> P NP | P NP VP 
     N -> 'milk'| 'shoes' | 'salad' | 'thinks' | 'kitchen' | 'midnight' | 'table'
     V -> 'laughs' | 'laughed' | 'drink' | 'wears' | 'serves' | 'drinks' | 'thinks' | 'does' | 'do' | 'wear'
     ProperNoun -> 'Bart' | 'Homer' | 'Lisa'
