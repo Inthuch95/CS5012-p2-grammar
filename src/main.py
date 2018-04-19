@@ -42,6 +42,15 @@ text_extended = """\
     what salad does Bart serve
     whom does Homer serve salad
     whom do Homer and Lisa serve
+    
+    the blue midnight laughs
+    Bart and Lisa and Homer drink milk
+    Bart is drunk
+    shoes are green
+    the shoes are on the table
+    
+    Bart laugh
+    tables is blue
     """
 
 def context_free_grammar():
@@ -82,18 +91,28 @@ def unification_grammar():
     S -> PREP_P S
     S -> Wh_P AUX[NUM=?n] NP VP
     
-    NP[NUM=?n] -> ProperNoun[NUM=?n] | CC ProperNoun[NUM=?n] | ProperNoun[NUM=?n] NP[NUM=?n]
-    NP[NUM=?n] -> N[NUM=?n] | ADJ_P NP[NUM=?n] | DET[NUM=?n] NP[NUM=?n] | N[NUM=?n] PREP_P
+    NP[NUM=?n] -> ProperNoun[NUM=?n] 
+    NP[NUM=?n] -> N[NUM=?n] | ADJ_P NP[NUM=?n] | DET[NUM=?n] NP[NUM=?n] | N[NUM=?n] PREP_P | ADJ_P
+    NP[NUM=?n] -> ProperNoun[NUM=?n] GER_P | GER_P
+    NP[NUM=?n] -> NP[NUM=?n] CC NP[NUM=?n]
      
-    VP[SUBCAT=?rest] -> V[NUM=?n, SUBCAT=?rest] | VP[TENSE=?t, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
-    VP[SUBCAT=?rest] -> ADV_P V[NUM=?n, SUBCAT=?rest] | V[NUM=?n, SUBCAT=?rest] ADV_P 
+    VP[SUBCAT=?rest, NUM=?n] -> V[NUM=?n, SUBCAT=?rest] | VP[TENSE=?t, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
+    VP[SUBCAT=?rest, NUM=?n] -> ADV_P V[NUM=?n, SUBCAT=?rest] | V[NUM=?n, SUBCAT=?rest] ADV_P
+    VP[SUBCAT=?rest, NUM=?n] -> MOD_P VP[TENSE=?t, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
+    VP[SUBCAT=?rest, NUM=?n] -> VTB[NUM=?n, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
     
-    ADJ_P -> ADJ | ADJ AP
+    GER_P -> GER NP
+    
+    ADJ_P -> ADJ | ADJ ADJ_P
     ADV_P -> ADV | ADV ADV_P
 
     PREP_P -> PREP NP | PREP S
     MOD_P -> MOD AUX[NUM=pl] |  MOD ADV AUX[NUM=pl]
     Wh_P -> Wh | Wh ARG[CAT=?arg] 
+    
+    ARG[CAT=np] -> NP
+    ARG[CAT=pp] -> PREP_P
+    ARG[CAT=s] -> S
     
     ################# Lexicons #################
     ################## NOUN ###################
@@ -133,6 +152,10 @@ def unification_grammar():
     V[TENSE=past, SUBCAT=[HEAD=np,TAIL=nil]] -> 'drank' | 'wore' | 'served'
     V[TENSE=pastpart, SUBCAT=[HEAD=np,TAIL=nil]] ->'drunk' | 'worn' | 'served' | 'seen'
     
+     ############### PRESENT CONT. #############
+    V[TENSE=prescon, FORM=prespart , SUBCAT=[HEAD=np,TAIL=nil]] -> 'drinking' | 'wearing' 
+    V[TENSE=prescon, FORM=prespart , SUBCAT=[HEAD=pp,TAIL=nil]] -> 'drinking'
+    
     ################ Determiner ###############
     DET[NUM=sg] -> 'a' | 'the' | 'that'
     DET[NUM=pl] -> 'the' | 'these' | 'those'
@@ -140,12 +163,18 @@ def unification_grammar():
     ################ Conjunction ##############
     CC -> 'and'
     
+    ################## Modal ##################
+    MOD -> 'may'
+    
+    ################# GERRUND #################
+    GER -> 'drinking'
+    
     ############ Adverb & Adjective ############
-    ADJ -> 'blue' | 'healthy' | 'green' | 'same'
-    ADV -> 'always' | 'never' | 'intensely' | 'not'
+    ADJ -> 'blue' | 'healthy' | 'green' | 'same' | 'drunk'
+    ADV -> 'always' | 'never' | 'not'
     
     ############## Preposition ##################
-    PREP -> 'in' | 'before' | 'when' | 'on' | 'beyond'
+    PREP -> 'in' | 'before' | 'when' | 'on' 
     
     AUX[NUM=sg] -> 'does' | 'has'
     AUX[NUM=pl] -> 'do' | 'have'
@@ -153,10 +182,6 @@ def unification_grammar():
     VTB[NUM=pl] -> 'are'
     
     Wh -> 'when' | 'what' | 'where' | 'whom'
-    
-    ARG[CAT=np] -> NP
-    ARG[CAT=pp] -> PP
-    ARG[CAT=s] -> S
     """)
     uparser = FeatureChartParser(ugrammar)
     sents = text_extended.splitlines()
