@@ -100,6 +100,7 @@ def unification_grammar():
     VP[SUBCAT=?rest, NUM=?n] -> ADV_P V[NUM=?n, SUBCAT=?rest] | V[NUM=?n, SUBCAT=?rest] ADV_P
     VP[SUBCAT=?rest, NUM=?n] -> MOD_P VP[TENSE=?t, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
     VP[SUBCAT=?rest, NUM=?n] -> VTB[NUM=?n, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
+    VP[SUBCAT=?rest, NUM=?n] -> VTB VP[SUBCAT=?rest]
     
     GER_P -> GER NP
     
@@ -166,7 +167,7 @@ def unification_grammar():
     ################## Modal ##################
     MOD -> 'may'
     
-    ################# GERRUND #################
+    ################# Gerund #################
     GER -> 'drinking'
     
     ############ Adverb & Adjective ############
