@@ -45,7 +45,7 @@ text_extended = """\
     
     the blue midnight laughs
     Bart and Lisa and Homer drink milk
-    Bart is drunk
+    Bart is drinking
     shoes are green
     the shoes are on the table
     
@@ -170,7 +170,7 @@ def unification_grammar():
     GER -> 'drinking'
     
     ############ Adverb & Adjective ############
-    ADJ -> 'blue' | 'healthy' | 'green' | 'same' | 'drunk'
+    ADJ -> 'blue' | 'healthy' | 'green' | 'same'
     ADV -> 'always' | 'never' | 'not'
     
     ############## Preposition ##################
