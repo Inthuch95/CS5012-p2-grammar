@@ -44,13 +44,16 @@ text_extended = """\
     whom do Homer and Lisa serve
     
     the blue midnight laughs
-    Bart and Lisa and Homer drink milk
+    Homer serves Lisa and Bart
     Bart is drinking
     shoes are green
+    kitchen is blue
     the shoes are on the table
     
     Bart laugh
     tables is blue
+    Lisa and Bart drinks milk
+    whom does Homer and Lisa serve
     """
 
 def context_free_grammar():
@@ -89,14 +92,14 @@ def unification_grammar():
     ################### RULES #################
     S -> NP[NUM=?n] VP[NUM=?n]
     S -> PREP_P S
-    S -> Wh_P AUX[NUM=?n] NP VP
+    S -> Wh_P AUX[NUM=?n] NP[NUM=?n] VP
     
     NP[NUM=?n] -> ProperNoun[NUM=?n] 
     NP[NUM=?n] -> N[NUM=?n] | ADJ_P NP[NUM=?n] | DET[NUM=?n] NP[NUM=?n] | N[NUM=?n] PREP_P | ADJ_P
     NP[NUM=?n] -> ProperNoun[NUM=?n] GER_P | GER_P
-    NP[NUM=?n] -> NP[NUM=?n] CC NP[NUM=?n]
+    NP[NUM=pl] -> NP[NUM=?n] CC NP[NUM=?n]
      
-    VP[SUBCAT=?rest, NUM=?n] -> V[NUM=?n, SUBCAT=?rest] | VP[TENSE=?t, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
+    VP[SUBCAT=?rest, NUM=?n] -> V[NUM=?n, SUBCAT=?rest] | VP[NUM=?n, TENSE=?t, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
     VP[SUBCAT=?rest, NUM=?n] -> ADV_P V[NUM=?n, SUBCAT=?rest] | V[NUM=?n, SUBCAT=?rest] ADV_P
     VP[SUBCAT=?rest, NUM=?n] -> MOD_P VP[TENSE=?t, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
     VP[SUBCAT=?rest, NUM=?n] -> VTB[NUM=?n, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
