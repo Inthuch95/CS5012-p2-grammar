@@ -4,6 +4,7 @@ Created on 9 Apr 2018
 from nltk import CFG, ChartParser
 from nltk.grammar import FeatureGrammar
 from nltk import FeatureChartParser
+import sys
 
 text = """\
     Bart laughs
@@ -49,6 +50,7 @@ text_extended = """\
     shoes are green
     kitchen is blue
     the shoes are on the table
+    Bart laughs yesterday
     
     Bart laugh
     tables is blue
@@ -175,10 +177,10 @@ def unification_grammar():
     
     ############ Adverb & Adjective ############
     ADJ -> 'blue' | 'healthy' | 'green' | 'same'
-    ADV -> 'always' | 'never' | 'not'
+    ADV -> 'always' | 'never' | 'not' | 'yesterday'
     
     ############## Preposition ##################
-    PREP -> 'in' | 'before' | 'when' | 'on' 
+    PREP -> 'in' | 'before' | 'when' | 'on'  
     
     AUX[NUM=sg] -> 'does' | 'has'
     AUX[NUM=pl] -> 'do' | 'have'
@@ -196,5 +198,11 @@ def unification_grammar():
             print(tree)
 
 if __name__ == '__main__':
-#     context_free_grammar()
-    unification_grammar()
+    grammar = sys.argv[1]
+    if grammar == "-u":
+        unification_grammar()
+    elif grammar == "-c":
+        context_free_grammar()
+    else:
+        print("Invalid parameter")
+        quit()
